@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <small class="text-red-400 {% if message.tags %}{{message.tags}}{% endif %}">{{message}}</small>
+    {% endfor %}
+{% endif %}
+<center>
+<form method="post">
+  {% csrf_token %}
+  {% for el in form %}
+  <div>
+  {{el}}
+  </div>
+  <small class="text-red-400">{{el.errors|striptags}}</small>
+  <script>
+    document.getElementById("{{el.auto_id}}").placeholder="{{el.label}}";
+    document.getElementById("{{el.auto_id}}").className += " shadow appearance-none border rounded mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+  </script>
+  {% endfor %}
+    <button type="submit" class="py-2 mt-4 px-4 bg-blue-600 text-white font-semibold rounded">Submit</button>
+</form>
+</center>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+<!-- Loading Statics -->
+{% load static %}
+{% block content %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-wrap -m-4">
+      {% for product in products %}
+      <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
+        {% if product.pic %}
+        <a class="block relative h-48 rounded overflow-hidden" href="/showproduct/{{product.name}}">
+          <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="{{product.pic.url}}">
+        </a>
+        {% endif %}
+        <div class="mt-4">
+          {% comment %} <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1"></h3> {% endcomment %}
+          <div class="flex justify-between place-items-center ">
+            <h2 class="text-gray-200 title-font text-lg font-medium">{{product.name}}</h2>
+            
+            {% if request.user.is_authenticated %}
+              <form action="/addtowishlist{{request.path}}{{product.id}}" method="post">
+              {% csrf_token %}
+                <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="red"  {% if product in wl %} fill="red" {% else %} fill="none" {% endif %} stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path></svg>
+              </button>
+              </form>
+            {% endif %}
+          </div>
+          <p class="mt-1 text-gray-300">₹{{product.price}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock content %}

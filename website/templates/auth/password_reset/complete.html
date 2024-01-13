@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block navTitle %}Succefully Reset password{% endblock navTitle %}
+{% block body %}
+  <p class="container py-4">
+    Your password has been set. You may go ahead and <a href="{% url 'signin' %}">sign in</a> now.
+  </p>
+{% endblock body %}

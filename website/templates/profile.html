@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div 
+    x-data="{
+      openTab: 1,
+      activeClasses: 'rounded-t bg-yellow-500 text-black',
+      inactiveClasses: 'border-r border-l border-t rounded-t border-transparent hover:border-yellow-500 text-white hover:text-white'
+    }" 
+    class="p-6"
+  >
+    <ul class="flex border-b">
+      <li @click="openTab = 1" :class="{ '-mb-px': openTab === 1 }" class="-mb-px mr-1">
+        <a :class="openTab === 1 ? activeClasses : inactiveClasses" class="bg-transparent  inline-block py-2 px-4 font-semibold" href="#">
+          Profile
+        </a>
+      </li>
+      <li @click="openTab = 2" :class="{ '-mb-px': openTab === 2 }" class="mr-1">
+        <a :class="openTab === 2 ? activeClasses : inactiveClasses" class="bg-transparent  inline-block py-2 px-4 font-semibold" href="#">Wishlist</a>
+      </li>
+    </ul>
+    <div class="w-full pt-4 text-white">
+
+
+        <div x-show="openTab === 1">
+            <section class="grid justify-items-center">
+              <div class="rounded-full h-32 w-32 flex items-center justify-center bg-gray-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="60" height="60" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <circle cx="12" cy="7" r="4" />
+                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                </svg>
+              </div>
+              <br>
+              <h2 class="text-xl text-gray-100">{{request.user.full_name}}</h2>
+              <hr class="border border-2 w-1/5 my-4">
+              <h2 class="text-lg text-gray-100">{{request.user.email}}</h2>
+              <a href="/signout" class="hover:bg-yellow-500 text-yellow-400 my-4 px-4 py-2 text-white rounded bg-transparent hover:text-white font-semibold">Logout</a>
+            </section>
+        </div>
+        <div x-show="openTab === 2">
+          <section class="text-gray-600 body-font">
+            <div class="container px-5 py-24 mx-auto">
+              <div class="flex flex-wrap -m-4">
+                {% for product in wishlist %}
+                <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
+                  {% if product.pic %}
+                  <a class="block relative h-48 rounded overflow-hidden" href="/showproduct/{{product.name}}">
+                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="{{product.pic.url}}">
+                  </a>
+                  {% endif %}
+                  <div class="mt-4">
+                    {% comment %} <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1"></h3> {% endcomment %}
+                    <div class="flex justify-between place-items-center ">
+                      <h2 class="text-gray-200 title-font text-lg font-medium">{{product.name}}</h2>
+                        {% if product.isCctv %}
+                        <form action="/addtowishlist/cctv/{{product.id}}" method="post">
+                        {% else %}
+                        <form action="/addtowishlist/shop/{{product.id}}" method="post">
+                        {% endif %}
+                        {% csrf_token %}
+                          <button type="submit">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="red"  {% if product in wishlist %} fill="red" {% else %} fill="none" {% endif %} stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path></svg>
+                        </button>
+                        </form>
+                    </div>
+                    <p class="mt-1 text-gray-300">{{product.price}}</p>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </section>
+        </div>
+    </div>
+  </div>
+
+
+{% endblock content %}

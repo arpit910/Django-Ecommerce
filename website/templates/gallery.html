@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+<!-- Loading Statics -->
+{% load static %}
+
+{% block content %}
+   
+<section class="text-gray-600 gallery-container max-w-full body-font px-40 py-10">
+    {% for image in gallery %}
+        {% if forloop.counter0|divisibleby:2 %}
+            <div class="gallery-row sm:gallerysmall">
+                <div class="gallery-image">
+                    <img src="{{image.gpic.url}}" width="100%" height="100%" alt="">
+                </div>
+        {% else %}
+                <div class="gallery-image">
+                    <img src="{{image.gpic.url}}" width="100%" height="100%" alt="">
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</section>
+{% endblock content%}
+{% block js %}
+    <script>
+        (function (window, document) {
+            var resizeImagesInGalleries = function resizeImagesInGalleries() {
+            var images = document.querySelectorAll('.gallery-image img');
+            images.forEach(function (image) {
+                var container = image.closest('.gallery-image');
+                var width = image.attributes.width.value;
+                var height = image.attributes.height.value;
+                var ratio = width / height;
+                container.style.flex = ratio + ' 1 0%';
+            });
+        };
+        document.addEventListener('DOMContentLoaded', resizeImagesInGalleries);
+        })(window, document);
+    </script>
+{% endblock js %}

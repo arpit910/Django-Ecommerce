@@ -1,0 +1,73 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+:root {
+    --darkbg: #000000;
+    --lightbg: #ffffff;
+    --grad1: linear-gradient( 109.6deg,  rgba(223,234,247,1) 11.2%, rgba(244,248,252,1) 91.1% );
+    --grad2: radial-gradient( circle 610px at 5.2% 51.6%,  rgba(5,8,114,1) 0%, rgba(7,3,53,1) 97.5% );
+    --boxer:radial-gradient( circle 300px at 8% 89.3%,  rgba(20,157,208,1) 0%, rgba(140,63,226,1) 90% );
+    
+}
+
+.bgparts{
+    background-color:red;
+    color: var(--lightbg);
+}
+
+.zx1{
+    background:'https://i.pinimg.com/originals/56/9e/82/569e826d96f4934f654d944aa89cad3b.jpg';
+}
+
+.slate0{
+    background-color: #000000;
+}
+
+.slate1{
+    background: var(--grad1);
+}
+
+.slate1:hover{
+    background: var(--grad2);
+}
+
+
+.mainclr
+{
+    color: var(--blue);
+    background-color: var(--blue);
+}
+
+
+.gallery-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.gallery-image{
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.gallery-row:not(:first-of-type){
+    margin: 0.75em 0 0 0;
+}
+.gallery-image:not(:first-of-type){
+    margin: 0 0 0 0.75em;
+}
+.gallery-image img{
+    display: block;
+    margin: 0;
+    max-width: auto;
+    max-height:400px;
+    width: auto;
+    height: auto;
+    border-radius: 15px;
+    transition: all .5s ease;
+}
+.gallery-image img:hover{
+    transform: scale(102%);
+}

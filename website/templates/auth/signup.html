@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <small class="text-red-400 {% if message.tags %}{{message.tags}}{% endif %}">{{message}}</small>
+    {% endfor %}
+{% endif %}
+<form method="post">
+  {% csrf_token %}
+  {% for el in form %}
+    <div class="container">
+        <div class="input-field">
+          {{el}}
+        </div>
+        <small class="text-red-400">{{el.errors|striptags}}</small>
+    </div>
+  {% endfor %}
+  <center>
+    <button type="submit" class="p-2 bg-indigo-900">Submit</button>
+  </center>
+</form>
+{% endblock content %}

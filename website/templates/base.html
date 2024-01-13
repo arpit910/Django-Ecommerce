@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static %}
+<html class='dark'>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   
+</head>
+<body class='dark:bg-black'>
+    {% include 'nav.html' %}    
+    {% block content %}{% endblock content %}  
+
+{% block js %}{% endblock js %}
+
+  <!-- Alpine.js -->
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</body>
+{% include 'footer.html' %}
+</html>
